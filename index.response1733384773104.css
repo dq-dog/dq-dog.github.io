@@ -1,0 +1,75 @@
+.page {
+    position: relative;
+    width: 100%;
+    height: 171.57vw;
+    overflow: hidden;
+}
+
+.group_1 {
+    height: 168.7vw;
+    background: url(./img/GenerateQRcodesonthepalmBG.png) 100% no-repeat;
+    background-size: 100% 100%;
+    width: 100%;
+}
+
+.text-wrapper_1 {
+    width: 42.19vw;
+    height: 1.72vw;
+    margin: 2.29vw 0 0 17.08vw;
+}
+
+.a-color-111111-end {
+    width: 10.37vw;
+    height: 1.72vw;
+    overflow-wrap: break-word;
+    color: rgba(6, 6, 6, 1);
+    font-size: 1.25vw;
+    font-family: PingFangSC-Semibold;
+    font-weight: 600;
+    text-align: center;
+    white-space: nowrap;
+    line-height: 1.72vw;
+}
+
+.a-color-111111-end {
+    width: 8.39vw;
+    height: 1.72vw;
+    overflow-wrap: break-word;
+    color: rgba(6, 6, 6, 1);
+    font-size: 1.25vw;
+    font-family: PingFangSC-Semibold;
+    font-weight: 600;
+    text-align: center;
+    white-space: nowrap;
+    line-height: 1.72vw;
+}
+
+.download {
+    width: 12.56vw;
+    height: 4.22vw;
+    margin: 37.08vw 0 0 87.08vw;
+}
+
+.image_1 {
+    width: 12.56vw;
+    height: 4.22vw;
+}
+
+.text-wrapper_2 {
+    width: 23.13vw;
+    height: 1.31vw;
+    margin: 124.21vw 0 2.13vw 38.43vw;
+}
+
+.text_3 {
+    width: 23.13vw;
+    height: 1.31vw;
+    overflow-wrap: break-word;
+    color: rgba(15, 15, 15, 1);
+    font-size: 0.93vw;
+    font-family: PingFangSC-Regular;
+    font-weight: NaN;
+    text-align: center;
+    white-space: nowrap;
+    line-height: 1.31vw;
+}
