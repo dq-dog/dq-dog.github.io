@@ -1,36 +1,411 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="zh-CN">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Generate QR codes on the palm</title>
-    <script src="./flexible.js"></script>
-    <link rel="stylesheet" type="text/css" href="./common.css" />
-    <link rel="stylesheet" type="text/css" href="./index.response1733384773104.css" />
-</head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tool Provider</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
 
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+            color: #1a73e8;
+            margin-right: 0.5rem;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #1a73e8;
+        }
+
+        .nav-links a {
+            margin-left: 2rem;
+            text-decoration: none;
+            color: #333;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: #1a73e8;
+        }
+
+        .hero {
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            background: linear-gradient(135deg, #1a73e8 0%, #4285f4 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="2"/></svg>') repeat;
+            opacity: 0.4;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInDown 1s;
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .features {
+            padding: 6rem 2rem;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+            color: #1a73e8;
+            font-size: 2.5rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            padding: 2.5rem;
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: #1a73e8;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .apps {
+            padding: 6rem 2rem;
+            background: white;
+        }
+
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .app-card {
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .app-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .app-image {
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+        }
+
+        .app-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .app-info {
+            padding: 2rem;
+        }
+
+        .app-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .app-info p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .app-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .app-store-link,
+        .play-store-link {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.8rem 1.2rem;
+            background: #1a73e8;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: background 0.3s;
+        }
+
+        .app-store-link:hover,
+        .play-store-link:hover {
+            background: #1557b0;
+        }
+
+        .app-links i {
+            margin-right: 0.5rem;
+        }
+
+        .about-section {
+            padding: 6rem 2rem;
+            background: #f8f9fa;
+            text-align: center;
+        }
+
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        footer {
+            padding: 3rem 2rem;
+            background: #1a73e8;
+            color: white;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            text-align: left;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-section p, .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .footer-bottom {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
 <body>
-    <div class="page flex-col">
-        <div class="group_1 flex-col">
-            <div class="text-wrapper_1 flex-row justify-between">
-                <span class="a-color-111111-end"><a href="https://www.freeprivacypolicy.com/live/e401139c-ad51-402c-86f1-baef2b945c1d" style="color: #111111; text-decoration: none;" target="_blank">Terms&nbsp;Of&nbsp;Service</a></span>
-                <span class="a-color-111111-end"><a href="https://www.freeprivacypolicy.com/live/e401139c-ad51-402c-86f1-baef2b945c1d" style="color: #111111; text-decoration: none;" target="_blank">Privacy&nbsp;Policy</a></span>
+    <nav class="navbar">
+        <a href="#" class="logo-container">
+            <i class="fas fa-wrench logo-icon"></i>
+            <span class="logo-text">Tool Provider</span>
+        </a>
+        <div class="nav-links">
+            <a href="#features">Featured Services</a>
+            <a href="#apps">Premium Applications</a>
+            <a href="#about">About Us</a>
+            <a href="#contact">Contact Details</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1 class="animate__animated animate__fadeInDown">Tool Provider</h1>
+        <p class="animate__animated animate__fadeInUp">Your enterprise service partner, providing you with a full range of enterprise service solutions</p>
+    </section>
+
+    <section class="features" id="features">
+        <h2 class="section-title">Featured Services</h2>
+        <div class="features-grid">
+            <div class="feature-card animate__animated animate__fadeInUp">
+                <i class="fas fa-mobile-alt feature-icon"></i>
+                <h3>Mobile Application Development</h3>
+                <p>Professional mobile application development team to create high-quality enterprise-level applications for you</p>
             </div>
-            <div class="download flex-row"> <a target="_blank" href="https://apps.apple.com/app/id6746118250">
-          <img
-            class="image_1"
-            referrerpolicy="no-referrer"
-            src="./SketchPng54f70db0a62d680b0b4af5a8612c1a6660f4c86b8a0205c624912748ab360789.png"
-          />
-        </a></div>
-            <div class="text-wrapper_2 flex-row">
-                <span class="text_3">
-            Copyright&nbsp;©&nbsp;&nbsp;<script>document.write(new Date().getFullYear())</script>&nbsp;Generate QR codes on the palm&nbsp;-&nbsp;All&nbsp;Rights&nbsp;Reserved.
-          </span>
+            <div class="feature-card animate__animated animate__fadeInUp" style="animation-delay: 0.2s">
+                <i class="fas fa-cloud feature-icon"></i>
+                <h3>Software customization service</h3>
+                <p>Provide safe and reliable software customization services to help enterprises achieve digital transformation</p>
             </div>
         </div>
-    </div>
-</body>
+    </section>
 
+    <section class="apps" id="apps">
+        <h2 class="section-title">Premium Applications</h2>
+        <div class="apps-grid">
+            <div class="app-card animate__animated animate__fadeInUp">
+                <div class="app-image">
+                    <img src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/1b/f0/c9/1bf0c950-df62-c811-6e37-cd152b399b9b/page1.png/497x883bb.jpg" alt="Generate QR codes on the palm">
+                </div>
+                <div class="app-info">
+                    <h3>Generate QR codes on the palm</h3>
+                    <p>This application is a software that generates QR codes for you and is easy to operate.</p>
+                    <div class="app-links">
+                        <a target="_blank" href="https://apps.apple.com/app/id644354017" class="app-store-link"><i class="fab fa-apple"></i> App Store</a>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="app-card animate__animated animate__fadeInUp" style="animation-delay: 0.2s"> -->
+           <!--      <div class="app-image">
+                    <img src="https://via.placeholder.com/300x600" alt="企业协作App">
+                </div>
+                <div class="app-info">
+                    <h3>企业协作App</h3>
+                    <p>专注于企业内部协作的移动应用，提升团队效率</p>
+                    <div class="app-links">
+                        <a href="#" class="app-store-link"><i class="fab fa-apple"></i> App Store</a>
+                        <a href="#" class="play-store-link"><i class="fab fa-google-play"></i> Google Play</a>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+    </section>
+
+    <section class="about-section" id="about">
+        <h2 class="section-title">About Us</h2>
+        <div class="about-content">
+            <p>We are a professional development tool software supplier with senior qualifications and efficient services.</p>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Contact Us</h4>
+                <p><i class="fas fa-envelope"></i> yangzhenguanggg@163.com</p>
+                <!-- <p><i class="fas fa-phone"></i> 400-888-8888</p>
+                <p><i class="fas fa-map-marker-alt"></i> 北京市朝阳区科技园区88号</p> -->
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <a href="#features">Featured Services</a>
+                <a href="#about">About Us</a>
+                <a href="#contact">Contact Details</a>
+            </div>
+            <div class="footer-section">
+                <h4>Follow us</h4>
+                <p><i class="fab fa-telegram"></i> @ToolProvider_pro</p>
+                <!-- <p><i class="fab fa-weibo"></i> 新浪微博：@国企伴官方</p> -->
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Tool Provider. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // 添加滚动动画
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate__animated');
+                    entry.target.classList.add(entry.target.dataset.animation || 'animate__fadeInUp');
+                }
+            });
+        });
+
+        document.querySelectorAll('.animate__animated').forEach(el => observer.observe(el));
+    </script>
+</body>
 </html>
